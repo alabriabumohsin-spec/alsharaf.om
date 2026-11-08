@@ -149,6 +149,9 @@ td.num{font-weight:700}
 .day{aspect-ratio:1;border-radius:10px;border:1px solid transparent;display:grid;place-items:center;font-variant-numeric:tabular-nums;font-size:.95rem;cursor:pointer;background:var(--ok-bg);color:var(--ink)}
 .day.peak{background:var(--peak-bg)}
 .day.busy{background:var(--busy-bg);color:var(--busy);text-decoration:line-through;cursor:not-allowed}
+.cal-loading{grid-column:1/-1;min-height:280px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;color:var(--muted);font-size:.95rem}
+.spin{width:28px;height:28px;border-radius:50%;border:3px solid var(--line);border-top-color:var(--brass);animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
 .day.past{background:transparent;color:var(--busy);cursor:not-allowed}
 .day.sel{background:var(--night);color:var(--night-ink);border-color:var(--brass)}
 :root[data-theme="dark"] .day.sel{background:var(--brass);color:var(--brass-ink)}
@@ -362,6 +365,7 @@ const BOOKINGS_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vR8iBRz1YO
 // أيام ذروة غير الجمعة (أعياد وإجازات رسمية)
 const PEAK = ["2026-11-18","2026-11-19","2026-11-20"];
 let BOOKED = {};
+let LOADED = false; // days stay hidden until the booked nights have been read
 // =================================
 
 const MONTHS=["يناير","فبراير","مارس","أبريل","مايو","يونيو","يوليو","أغسطس","سبتمبر","أكتوبر","نوفمبر","ديسمبر"];
@@ -397,6 +401,7 @@ function renderCal(){
   $("prev").disabled=state.y===today.getFullYear()&&state.m===today.getMonth();
   const first=new Date(state.y,state.m,1), days=new Date(state.y,state.m+1,0).getDate();
   const offset=(first.getDay()+1)%7; // Saturday = 0
+  if(!LOADED){$("grid").innerHTML=`<div class="cal-loading" role="status"><span class="spin" aria-hidden="true"></span>جارٍ تحميل الأيام المتاحة…</div>`;return}
   let h=DOW_SHORT.map(d=>`<div class="dow">${d}</div>`).join("")+"<div></div>".repeat(offset);
   for(let i=1;i<=days;i++){
     const d=new Date(state.y,state.m,i),k=key(d),free=freeOn(k).length;
@@ -506,8 +511,7 @@ render();
 
 // availability: read the booked nights when the page opens
 (async()=>{
-  if(!BOOKINGS_URL)return;
-  $("calStatus").textContent="جارٍ تحميل الأيام المتاحة…";
+  if(!BOOKINGS_URL){LOADED=true;render();return}
   try{
     const r=await fetch(BOOKINGS_URL,{cache:"no-store"});
     if(!r.ok)throw new Error(r.status);
@@ -517,8 +521,10 @@ render();
     rows.forEach(c=>head.forEach((h,i)=>{if(i&&/^\d+$/.test(h)&&String(c[i]||"").trim())(next[h]=next[h]||[]).push(c[0])}));
     BOOKED=next;
     if(state.chalet&&state.date&&isBooked(state.chalet,key(state.date)))state.chalet=null;
-    $("calStatus").textContent="";render();
+    LOADED=true;render();
   }catch(e){
+    // still let guests pick a day, and say availability is confirmed on WhatsApp
+    LOADED=true;render();
     $("calStatus").textContent="ما قدرنا نحمّل الأيام المحجوزة الآن. أرسل طلبك وبنأكد لك التوفر على واتساب.";
   }
 })();
