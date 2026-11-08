@@ -1,0 +1,527 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="شاليهات الشرف في الجبل الشرقي، ولاية الحمراء. اختر يومك وشاهد الشاليهات المتاحة واحجز عبر واتساب.">
+<meta property="og:title" content="شاليهات الشرف">
+<meta property="og:description" content="شاليهات عائلية خاصة في الجبل الشرقي، ولاية الحمراء. احجز عبر واتساب.">
+<meta property="og:image" content="https://alsharaf.om/images/hero.jpg">
+<meta property="og:url" content="https://alsharaf.om/">
+<meta name="theme-color" content="#14213a">
+<style>:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>شاليهات الشرف</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=El+Messiri:wght@500;700&family=Tajawal:wght@400;500;700&display=swap">
+<style>
+/* Layout: one long page; a dark night-blue hero band, then light sand sections; chalets as arched cards; booking = calendar + form side by side */
+:root{
+  --bg:#f6f2ea; --surface:#fffdf8; --ink:#1b2333; --muted:#5d6475; --line:#e2dccf;
+  --night:#14213a; --night-ink:#f3ecdc; --brass:#b8862f; --brass-ink:#ffffff;
+  --water:#3f8fa6; --ok:#2f7d55; --ok-bg:#e3f1e8; --busy:#9aa0aa; --busy-bg:#ecebe7; --peak:#b8862f; --peak-bg:#f6ead2;
+  --display:"El Messiri","Tajawal",Tahoma,sans-serif;
+  --body:"Tajawal",Tahoma,"Segoe UI",sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0f1626; --surface:#17203a; --ink:#ece6d8; --muted:#a6acbb; --line:#2a3552;
+  --night:#0a1020; --night-ink:#f3ecdc; --brass:#d4a54e; --brass-ink:#1a1408;
+  --water:#5fb0c6; --ok:#7fd1a2; --ok-bg:#1d3a2c; --busy:#6b7285; --busy-bg:#1c2438; --peak:#e0b765; --peak-bg:#3a2f18; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f1626; --surface:#17203a; --ink:#ece6d8; --muted:#a6acbb; --line:#2a3552;
+  --night:#0a1020; --night-ink:#f3ecdc; --brass:#d4a54e; --brass-ink:#1a1408;
+  --water:#5fb0c6; --ok:#7fd1a2; --ok-bg:#1d3a2c; --busy:#6b7285; --busy-bg:#1c2438; --peak:#e0b765; --peak-bg:#3a2f18; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.7}
+.wrap{max-width:1120px;margin-inline:auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0;line-height:1.25}
+h2{font-size:clamp(1.7rem,4vw,2.4rem)}
+.eyebrow{color:var(--brass);font-weight:700;font-size:.85rem;letter-spacing:.04em}
+section{padding-block:72px}
+a{color:inherit}
+button,input,select{font:inherit}
+:focus-visible{outline:2px solid var(--brass);outline-offset:2px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:999px;padding:12px 24px;background:var(--brass);color:var(--brass-ink);font-weight:700;text-decoration:none;cursor:pointer}
+.btn.ghost{background:transparent;color:inherit;border:1px solid currentColor}
+.btn[aria-disabled="true"]{opacity:.45;pointer-events:none}
+.num{font-variant-numeric:tabular-nums}
+
+/* header + hero */
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--night)}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--night);color:var(--night-ink);border-bottom:1px solid rgba(255,255,255,.08)}
+header .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:12px}
+.logo{display:flex;align-items:center;gap:10px;font-family:var(--display);font-size:1.35rem;text-decoration:none}
+.logo svg{width:30px;height:30px;color:var(--brass)}
+nav{display:flex;gap:20px;font-size:.95rem}
+nav a{text-decoration:none;opacity:.85}
+nav a:hover{opacity:1;color:var(--brass)}
+@media (max-width:720px){nav{display:none}}
+.hero{background:var(--night);color:var(--night-ink);padding-block:56px 72px;overflow:hidden}
+.hero .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center}
+.hero .wrap>div{min-width:0}
+.hero h1{font-size:clamp(2.2rem,5.5vw,3.6rem);line-height:1.5}
+.hero h1 span{display:block;color:var(--brass);font-size:.55em;font-weight:500;line-height:1.6;margin-top:4px}
+.hero p{max-width:34em;opacity:.85;font-size:1.08rem}
+.hero .actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:24px}
+.hero .stats{display:flex;flex-wrap:wrap;gap:28px;margin-top:32px;font-size:.9rem;opacity:.85}
+.hero .stats b{display:block;font-family:var(--display);font-size:1.7rem;color:var(--brass);opacity:1}
+.hero-photo{display:block;width:100%;max-width:400px;aspect-ratio:4/5;object-fit:cover;justify-self:center;border-radius:200px 200px 16px 16px;border:1px solid var(--brass);box-shadow:0 20px 50px rgba(0,0,0,.35)}
+@media (max-width:820px){.hero-photo{max-width:320px}}
+.page-bg{position:fixed;inset:0;z-index:-1;background:url(images/hero.jpg) 45% center/cover no-repeat;opacity:.7;pointer-events:none}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .page-bg{opacity:.6}}
+:root[data-theme="dark"] .page-bg{opacity:.6}
+.hero{background:linear-gradient(180deg,color-mix(in srgb,var(--night) 0%,transparent),color-mix(in srgb,var(--night) 35%,transparent)),url(images/hero.jpg) 45% 45%/cover no-repeat!important}
+.hero .wrap{grid-template-columns:1fr!important;text-align:start}
+#prices,#location{background:color-mix(in srgb,var(--surface) 30%,transparent)!important}
+.hero{min-height:min(88vh,820px);display:flex;align-items:center;padding-block:96px 120px!important}
+.hero>.wrap{width:100%}
+.hero h1,.hero p,.hero .stats,.hero .eyebrow{text-shadow:0 2px 14px rgba(0,0,0,.55)}
+.hero h1 span{text-shadow:0 1px 3px rgba(0,0,0,.7),0 2px 18px rgba(0,0,0,.6)}
+.arches{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;align-items:end;height:280px}
+.arches div{border-radius:999px 999px 6px 6px;background:linear-gradient(180deg,#24365c 0%,#2e4a72 45%,var(--water) 46%,#2a6f86 100%);position:relative;border:1px solid rgba(212,165,78,.35)}
+.arches div:nth-child(1){height:70%}.arches div:nth-child(2){height:88%}.arches div:nth-child(3){height:100%}.arches div:nth-child(4){height:88%}.arches div:nth-child(5){height:70%}
+.arches div span{position:absolute;top:18px;inset-inline:0;text-align:center;font-family:var(--display);color:var(--brass);font-size:1.3rem}
+@media (max-width:820px){.hero .wrap{grid-template-columns:1fr}.arches{height:180px}}
+
+/* chalets */
+.head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:end;gap:16px;margin-bottom:32px}
+.head p{color:var(--muted);margin:6px 0 0;max-width:38em}
+.chalets{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px}
+.chalet{background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;display:flex;flex-direction:column}
+.chalet .pic{aspect-ratio:4/3;max-width:100%;position:relative;display:grid;place-items:center}
+.chalet .pic:not(.has-photo)::after{content:"صورة الشاليه";position:absolute;bottom:8px;inset-inline-start:10px;font-size:.72rem;color:#fff;opacity:.75}
+.chalet .pic b{font-family:var(--display);font-size:3rem;color:#fff;opacity:.9}
+.chalet .pic.has-photo{border:0;padding:0;width:100%;cursor:zoom-in;background-size:cover;background-position:center;background-color:var(--line)}
+.chalet .pic .count{position:absolute;bottom:10px;inset-inline-start:10px;background:rgba(10,16,32,.72);color:#fff;font-size:.78rem;border-radius:999px;padding:4px 12px}
+.chalet .pic.has-photo:hover .count{background:var(--brass);color:var(--brass-ink)}
+dialog.gallery{border:0;padding:0;background:transparent;max-width:min(1100px,100vw);width:100%;color:#fff}
+dialog.gallery::backdrop{background:rgba(6,10,20,.92)}
+.g-wrap{display:flex;flex-direction:column;gap:10px;padding:12px max(16px,env(safe-area-inset-left,0px))}
+.g-top{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.g-top b{font-family:var(--display);font-size:1.2rem;font-weight:500}
+.g-stage{position:relative;display:grid;place-items:center}
+.g-stage img{max-height:72vh;width:auto;max-width:100%;border-radius:12px;object-fit:contain;background:#000}
+.g-btn{border:1px solid rgba(255,255,255,.3);background:rgba(10,16,32,.6);color:#fff;border-radius:50%;width:44px;height:44px;font-size:1.3rem;cursor:pointer}
+.g-btn:hover{background:var(--brass);color:var(--brass-ink);border-color:var(--brass)}
+.g-prev,.g-next{position:absolute;top:50%;transform:translateY(-50%)}
+.g-prev{right:8px}.g-next{left:8px}
+.g-thumbs{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px}
+.g-thumbs button{flex:0 0 auto;width:72px;height:54px;border-radius:8px;border:2px solid transparent;padding:0;background-size:cover;background-position:center;cursor:pointer;opacity:.6}
+.g-thumbs button[aria-current="true"]{border-color:var(--brass);opacity:1}
+.chalet.is-soon .pic{filter:grayscale(.6) brightness(.85)}
+.chalet .pic .badge{position:absolute;top:10px;inset-inline-start:10px;background:var(--brass);color:var(--brass-ink);font-size:.75rem;font-weight:700;border-radius:999px;padding:3px 12px}
+.soon{display:inline-block;color:var(--peak);background:var(--peak-bg);border-radius:999px;padding:3px 12px;font-size:.82rem;font-weight:700}
+.chalet .body{padding:16px;display:flex;flex-direction:column;gap:10px;flex:1}
+.chalet h3{font-size:1.3rem}
+.chalet .meta{color:var(--muted);font-size:.88rem}
+.chalet ul{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:6px}
+.chalet li{font-size:.78rem;background:var(--bg);border:1px solid var(--line);border-radius:999px;padding:2px 10px}
+.chalet .foot{margin-top:auto;display:flex;justify-content:space-between;align-items:center;gap:8px;padding-top:8px;border-top:1px solid var(--line)}
+.chalet .price{font-weight:700}
+.chalet .price small{color:var(--muted);font-weight:400}
+.chalet .btn{padding:8px 14px;font-size:.88rem}
+
+/* prices */
+.tablewrap{overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-radius:14px}
+table{width:100%;border-collapse:collapse;min-width:620px}
+th,td{padding:14px 16px;text-align:start;border-bottom:1px solid var(--line)}
+th{font-size:.82rem;color:var(--muted);font-weight:700;background:var(--bg)}
+tr:last-child td{border-bottom:0}
+td.num{font-weight:700}
+.times{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:16px;color:var(--muted);font-size:.9rem}
+.times div{padding:12px 14px;border:1px dashed var(--line);border-radius:10px}
+.times b{color:var(--ink)}
+
+/* booking */
+.booking{display:grid;grid-template-columns:1.15fr .85fr;gap:20px;align-items:start}
+@media (max-width:900px){.booking{grid-template-columns:1fr}}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px;min-width:0}
+.tabs{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px}
+.tabs button{border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:999px;padding:6px 14px;cursor:pointer;font-size:.9rem}
+.tabs button[aria-pressed="true"]{background:var(--night);color:var(--night-ink);border-color:var(--night)}
+:root[data-theme="dark"] .tabs button[aria-pressed="true"]{background:var(--brass);color:var(--brass-ink);border-color:var(--brass)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .tabs button[aria-pressed="true"]{background:var(--brass);color:var(--brass-ink);border-color:var(--brass)}}
+.calhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.calhead h3{font-size:1.2rem}
+.calhead button{border:1px solid var(--line);background:transparent;color:var(--ink);width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:1.1rem}
+.calhead button:disabled{opacity:.3;cursor:default}
+.grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+.grid .dow{font-size:.75rem;color:var(--muted);text-align:center;padding-block:4px}
+.day{aspect-ratio:1;border-radius:10px;border:1px solid transparent;display:grid;place-items:center;font-variant-numeric:tabular-nums;font-size:.95rem;cursor:pointer;background:var(--ok-bg);color:var(--ink)}
+.day.peak{background:var(--peak-bg)}
+.day.busy{background:var(--busy-bg);color:var(--busy);text-decoration:line-through;cursor:not-allowed}
+.day.past{background:transparent;color:var(--busy);cursor:not-allowed}
+.day.sel{background:var(--night);color:var(--night-ink);border-color:var(--brass)}
+:root[data-theme="dark"] .day.sel{background:var(--brass);color:var(--brass-ink)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .day.sel{background:var(--brass);color:var(--brass-ink)}}
+.day:not(.busy):not(.past):hover{border-color:var(--brass)}
+.legend{display:flex;flex-wrap:wrap;gap:14px;margin-top:12px;font-size:.8rem;color:var(--muted)}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:4px;vertical-align:-1px;margin-inline-end:6px}
+.note{font-size:.85rem;color:var(--muted);background:var(--peak-bg);border-radius:10px;padding:10px 12px;margin-top:14px}
+.avail{margin-top:16px;border-top:1px solid var(--line);padding-top:14px}
+.avail h4{margin:0 0 8px;font-size:.9rem}
+.avail-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:6px}
+.avail-list button{display:flex;justify-content:space-between;gap:6px;border:1px solid var(--line);border-radius:8px;padding:6px 10px;font-size:.82rem;background:var(--bg);color:var(--ink);cursor:pointer;text-align:start}
+.avail-list button:disabled{cursor:not-allowed;color:var(--busy)}
+.avail-list .y{color:var(--ok)}
+.day{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;line-height:1.2}
+.day small{font-size:.62rem;color:var(--ok);font-weight:700}
+.day.sel small{color:inherit;opacity:.8}
+.picks{display:grid;gap:8px}
+.pick{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;border:1px solid var(--line);border-radius:12px;padding:12px 14px;background:var(--bg);color:var(--ink);cursor:pointer;text-align:start}
+.pick i{width:14px;height:40px;border-radius:999px}
+.pick b{display:block;font-family:var(--display);font-size:1.05rem;font-weight:500}
+.pick small{color:var(--muted);font-size:.8rem}
+.pick .num{font-weight:700}
+.pick:hover{border-color:var(--brass)}
+.pick[aria-pressed="true"]{border-color:var(--brass);background:var(--peak-bg);box-shadow:inset 0 0 0 1px var(--brass)}
+form{display:flex;flex-direction:column;gap:14px}
+label.f{display:flex;flex-direction:column;gap:6px;font-size:.88rem;font-weight:500}
+input[type=text],input[type=tel]{border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:10px;padding:10px 12px}
+.opts{display:flex;flex-direction:column;gap:6px}
+.opt{display:flex;justify-content:space-between;gap:10px;align-items:center;border:1px solid var(--line);border-radius:10px;padding:10px 12px;cursor:pointer}
+.opt:has(input:checked){border-color:var(--brass);background:var(--peak-bg)}
+.opt span small{display:block;color:var(--muted);font-size:.78rem}
+.opt input{accent-color:var(--brass)}
+.check{display:flex;gap:8px;align-items:flex-start;font-size:.9rem}
+.check input{accent-color:var(--brass);margin-top:6px}
+.summary{background:var(--bg);border-radius:10px;padding:12px 14px;font-size:.9rem;display:grid;gap:4px}
+.summary .total{display:flex;justify-content:space-between;font-size:1.1rem;font-weight:700;border-top:1px solid var(--line);padding-top:8px;margin-top:4px}
+.sel-date{font-family:var(--display);font-size:1.15rem}
+.fine{font-size:.8rem;color:var(--muted);margin:0}
+
+/* location + contact */
+.loc{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media (max-width:820px){.loc{grid-template-columns:1fr}}
+.stays{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:8px;margin-top:12px}
+.stays a{display:grid;grid-template-columns:1fr auto;gap:0 8px;align-items:center;text-decoration:none;border:1px solid var(--line);border-radius:10px;padding:8px 12px;background:var(--surface)}
+.stays a:hover{border-color:var(--brass)}
+.stays b{font-weight:500;font-size:.9rem}
+.stays small{grid-row:2;color:var(--muted);font-size:.78rem}
+.stays span{grid-row:1/3;grid-column:2;color:var(--brass);font-size:.78rem;white-space:nowrap}
+.owner{flex-basis:100%;order:3;font-size:.78rem;opacity:.7}
+.owner-link{background:none;border:0;padding:0;color:var(--brass);text-decoration:underline;cursor:pointer;font-size:inherit}
+.owner-link:disabled{opacity:.5;cursor:wait}
+.owner .warn{color:var(--peak);font-weight:700}
+.near{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.near span{font-size:.82rem;border:1px solid var(--line);border-radius:999px;padding:3px 12px;background:var(--surface)}
+footer{background:var(--night);color:var(--night-ink);padding-block:40px}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:20px;align-items:center}
+.phone{font-family:var(--display);font-size:1.5rem;direction:ltr;unicode-bidi:embed;user-select:all}
+.copy{border:1px solid rgba(255,255,255,.3);background:transparent;color:inherit;border-radius:999px;padding:4px 12px;cursor:pointer;font-size:.8rem}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+
+<div class="page-bg" aria-hidden="true"></div>
+<div dir="rtl" lang="ar">
+<header>
+  <div class="wrap">
+    <a class="logo" href="#top"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 29V15a11 11 0 0 1 22 0v14"/><path d="M11 29V17a5 5 0 0 1 10 0v12"/><path d="M3 29h26"/></svg>شاليهات الشرف</a>
+    <nav><a href="#chalets">الشاليهات</a><a href="#prices">الأسعار</a><a href="#book">الحجز</a><a href="#location">الموقع</a><a href="#contact">تواصل معنا</a></nav>
+    <a class="btn" href="#book" style="padding:8px 18px;font-size:.9rem">احجز</a>
+  </div>
+</header>
+
+<div class="hero" id="top">
+  <div class="wrap">
+    <div>
+      <div class="eyebrow">شاليهات عائلية خاصة · الجبل الشرقي، ولاية الحمراء</div>
+      <h1>استراحتك في قلب الجبل<span>خمسة شاليهات خاصة في الجبل الشرقي</span></h1>
+      <p>كل شاليه مستقل بجلسته ومطبخه. اختر الشاليه المناسب لعددكم، شوف الأيام المتاحة في التقويم، وأرسل طلب الحجز على واتساب.</p>
+      <div class="actions"><a class="btn" href="#book">اختر يومك</a><a class="btn ghost" href="#chalets">تعرّف على الشاليهات</a></div>
+      <div class="stats"><div><b class="num">3</b>شاليهات جاهزة، و2 قريباً</div><div><b class="num">11:00</b>الدخول صباحاً</div></div>
+    </div>
+  </div>
+</div>
+
+<section id="book">
+  <div class="wrap">
+    <div class="head"><div><div class="eyebrow">الحجز</div><h2>اختر يومك، ثم الشاليه</h2><p>اختر اليوم من التقويم، وتظهر لك الشاليهات المتاحة فيه فقط. يصلنا طلبك على واتساب، ونرد عليك لتأكيد الحجز.</p></div></div>
+    <div class="booking">
+      <div class="panel">
+        <div class="calhead">
+          <button type="button" id="prev" aria-label="الشهر السابق">›</button>
+          <h3 id="monthLabel"></h3>
+          <button type="button" id="next" aria-label="الشهر التالي">‹</button>
+        </div>
+        <div class="grid" id="grid"></div>
+        <p class="fine" id="calStatus" role="status" style="margin:8px 0 0"></p>
+        <div class="legend">
+          <span><i style="background:var(--ok-bg);border:1px solid var(--line)"></i>متاح</span>
+          <span><i style="background:var(--busy-bg)"></i>كل الشاليهات محجوزة</span>
+          <span><b style="font-size:.7rem;color:var(--ok)">2/3</b> عدد الشاليهات المتاحة</span>
+          <span><i style="background:var(--night);border:1px solid var(--brass)"></i>اختيارك</span>
+        </div>
+                <div class="avail" id="avail" hidden>
+          <h4 id="availTitle"></h4>
+          <div class="picks" id="availList" role="group" aria-label="الشاليهات المتاحة"></div>
+        </div>
+        <div class="note"><b>أوقات الذروة:</b> يوم الجمعة والأعياد والإجازات الرسمية وإجازات المدارس تنحجز بسرعة، فاحجز مبكراً.</div>
+      </div>
+
+      <form class="panel" id="form">
+        <div><div class="fine">بيانات الحجز</div><div class="sel-date" id="selDate">اختر يوماً متاحاً من التقويم</div></div>
+        <div class="opts" role="radiogroup" aria-label="نوع الحجز">
+          <label class="opt"><span>إقامة مع مبيت<small>الدخول 11:00 ص · الخروج 8:00 ص اليوم التالي</small></span><input type="radio" name="type" id="t-stay" value="stay" checked></label>
+        </div>
+        <label class="f">الاسم<input type="text" id="name" autocomplete="name" placeholder="اسمك الكامل"></label>
+        <label class="f">رقم الهاتف<input type="tel" id="phone" autocomplete="tel" placeholder="9XXXXXXX" dir="ltr" style="text-align:right"></label>
+        <div class="summary">
+          <div id="sumChalet"></div>
+          <div id="sumType"></div>
+          <div class="total"><span>المبلغ</span><span class="num" id="total">–</span></div>
+        </div>
+        <a class="btn" id="send" href="#" target="_blank" rel="noopener" aria-disabled="true">أرسل الطلب على واتساب</a>
+        <p class="fine" id="hint"></p>
+        <p class="fine">يفتح واتساب ورسالة الحجز مكتوبة. اضغط إرسال هناك ليصلنا طلبك. الحجز يتأكد بعد ردّنا عليك.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<section id="chalets">
+  <div class="wrap">
+    <div class="head"><div><div class="eyebrow">الشاليهات</div><h2>اختر شاليهك</h2><p>خمسة شاليهات بمساحات مختلفة، كلها بخصوصية تامة.</p></div></div>
+    <div class="chalets" id="chaletCards"></div>
+  </div>
+</section>
+
+<section id="prices" style="background:var(--surface);border-block:1px solid var(--line)">
+  <div class="wrap">
+    <div class="head"><div><div class="eyebrow">الأسعار والتواقيت</div><h2>أسعار كل شاليه</h2><p>الأسعار بالريال العُماني لليلة الواحدة، وتشمل المبيت.</p></div></div>
+    <div class="tablewrap"><table>
+      <thead><tr><th>الشاليه</th><th>السعة</th><th>السبت–الخميس</th><th>الجمعة والإجازات</th></tr></thead>
+      <tbody id="priceRows"></tbody>
+    </table></div>
+    <div class="times">
+      <div><b>الدخول:</b> 11:00 صباحاً</div>
+      <div><b>الخروج:</b> 8:00 صباحاً اليوم التالي</div>
+    </div>
+  </div>
+</section>
+
+
+<section id="location" style="background:var(--surface);border-block:1px solid var(--line)">
+  <div class="wrap loc">
+    <div>
+      <div class="eyebrow">الموقع</div>
+      <h2>شاليهات الشرف</h2>
+      <p style="color:var(--muted)">الجبل الشرقي، ولاية الحمراء، سلطنة عُمان</p>
+      <a class="btn ghost" href="https://maps.app.goo.gl/ypkRCaaF5wDUjxrd7" target="_blank" rel="noopener">افتح في خرائط Google</a>
+    </div>
+    <div>
+      <h3 style="font-size:1.1rem">خدمات قريبة</h3>
+      <div class="near"><span>صيدلية</span><span>مطعم</span><span>محل تجاري</span><span>كوفي</span><span>محطة بترول</span><span>مركز صحي</span></div>
+      <h3 style="font-size:1.1rem;margin-top:20px">معالم قريبة</h3>
+      <div class="near"><span>جبل شمس</span><span>وادي غول</span><span>الحارة القديمة بالحمراء</span><span>مسفاة العبريين</span><span>بيت الصفاة</span><span>كهف الهوتة</span></div>
+      <h3 style="font-size:1.1rem;margin-top:20px">استراحات ونُزل في الجبل الشرقي</h3>
+      <div class="stays"><a href="https://www.google.com/maps/search/?api=1&query=Shorfet%20Al%20Alamin%20Hotel%20Al%20Hamra" target="_blank" rel="noopener"><b>فندق شرفة العلمين</b><small>جبل هاط</small><span>الموقع ↗</span></a><a href="https://www.google.com/maps/search/?api=1&query=%D9%85%D9%86%D8%AA%D8%AC%D8%B9%20%D8%AC%D8%A8%D9%84%20%D9%87%D8%A7%D8%B7%20%D8%A7%D9%84%D8%AD%D9%85%D8%B1%D8%A7%D8%A1" target="_blank" rel="noopener"><b>منتجع جبل هاط</b><small>جبل هاط</small><span>الموقع ↗</span></a><a href="https://www.google.com/maps/search/?api=1&query=%D8%A7%D8%B3%D8%AA%D8%B1%D8%A7%D8%AD%D8%A9%20%D8%A7%D9%84%D8%AC%D8%A8%D9%84%20%D8%A7%D9%84%D8%B4%D8%B1%D9%82%D9%8A%20%D8%A7%D9%84%D8%AD%D9%85%D8%B1%D8%A7%D8%A1" target="_blank" rel="noopener"><b>استراحة الجبل الشرقي</b><small>الجبل الشرقي</small><span>الموقع ↗</span></a><a href="https://www.google.com/maps/search/?api=1&query=%D8%A7%D8%B3%D8%AA%D8%B1%D8%A7%D8%AD%D8%A9%20%D8%A3%D8%B1%D8%B6%20%D8%A7%D9%84%D9%82%D9%85%D8%B1%20%D8%A7%D9%84%D8%AC%D8%A8%D9%84%20%D8%A7%D9%84%D8%B4%D8%B1%D9%82%D9%8A" target="_blank" rel="noopener"><b>استراحة أرض القمر</b><small>الجبل الشرقي</small><span>الموقع ↗</span></a></div>
+      <h3 style="font-size:1.1rem;margin-top:20px">فنادق في ولاية الحمراء</h3>
+      <div class="stays"><a href="https://www.google.com/maps/search/?api=1&query=Al%20Hamra%20Mountain%20View" target="_blank" rel="noopener"><b>الحمراء ماونتن فيو</b><small>قرب الحارة القديمة</small><span>الموقع ↗</span></a><a href="https://www.google.com/maps/search/?api=1&query=Al%20Hamra%20Old%20House%20Hotel" target="_blank" rel="noopener"><b>فندق بيت الحمراء القديم</b><small>قرب بيت الصفاة</small><span>الموقع ↗</span></a><a href="https://www.google.com/maps/search/?api=1&query=The%20View%20Oman%20Misfat" target="_blank" rel="noopener"><b>منتجع ذا فيو</b><small>مسفاة العبريين</small><span>الموقع ↗</span></a><a href="https://www.google.com/maps/search/?api=1&query=Jebel%20Shams%20Resort" target="_blank" rel="noopener"><b>منتجع جبل شمس</b><small>طريق جبل شمس</small><span>الموقع ↗</span></a></div>
+      <p class="fine" style="margin-top:10px">الأماكن للاسترشاد فقط، وليست تابعة لشاليهات الشرف.</p>
+    </div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="wrap">
+    <div><div class="eyebrow">تواصل معنا</div><div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap"><span class="phone" id="phoneTxt"></span><button class="copy" type="button" id="copyBtn">نسخ الرقم</button></div></div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap"><a class="btn" id="waFooter" target="_blank" rel="noopener">واتساب</a><a class="btn ghost" href="https://www.instagram.com/alsharaf.chalets/" target="_blank" rel="noopener" dir="ltr">@alsharaf.chalets</a></div>
+  </div>
+</footer>
+
+<dialog class="gallery" id="gallery" aria-label="معرض الصور">
+  <div class="g-wrap" dir="rtl">
+    <div class="g-top"><b id="gTitle"></b><span class="num" id="gCount"></span><button type="button" class="g-btn" id="gClose" aria-label="إغلاق">×</button></div>
+    <div class="g-stage">
+      <img id="gImg" alt="">
+      <button type="button" class="g-btn g-prev" id="gPrev" aria-label="الصورة السابقة">›</button>
+      <button type="button" class="g-btn g-next" id="gNext" aria-label="الصورة التالية">‹</button>
+    </div>
+    <div class="g-thumbs" id="gThumbs"></div>
+  </div>
+</dialog>
+</div>
+
+
+<script>
+// ===== الإعدادات: عدّل هنا =====
+const WHATSAPP = "96871572244";         // رقم واتساب بدون +
+const PHONE_DISPLAY = "+968 7157 2244";  // الرقم كما يظهر
+const CHALETS = [
+  {id:1, name:"شاليه القمر", cap:"حتى 15 شخص", hue:"#4a5578", feats:["مسبح خارجي","جلسة مظللة بطاولة طعام","شواية","ألعاب أطفال","غرفتا نوم","صالة ومطبخ"], full:50, fri:60, night:20,
+   photos:["images/qamar/qamar-01.jpg","images/qamar/qamar-02.jpg","images/qamar/qamar-03.jpg","images/qamar/qamar-04.jpg","images/qamar/qamar-05.jpg","images/qamar/qamar-06.jpg","images/qamar/qamar-07.jpg","images/qamar/qamar-08.jpg","images/qamar/qamar-09.jpg","images/qamar/qamar-10.jpg","images/qamar/qamar-11.jpg","images/qamar/qamar-12.jpg"]},
+  {id:2, name:"شاليه الرمان",  cap:"حتى 6 أشخاص", hue:"#8e2b3a", feats:["غرفتا نوم","دورتا مياه","مطبخ صغير","جلسة خارجية"], full:50, fri:55, night:20},
+  {id:3, name:"شاليه الزيتون",  cap:"حتى 6 أشخاص", hue:"#5d6b34", feats:["غرفتا نوم","دورتا مياه","مطبخ صغير","جلسة خارجية"], full:50, fri:55, night:25},
+  {id:4, name:"شاليه الخوخ", cap:"حتى 12 شخص", hue:"#c06a4f", feats:["مسبح خاص","جلسة شواء","مطبخ"], full:50, fri:60, night:20, soon:true},
+  {id:5, name:"شاليه المشمش",  cap:"حتى 25 شخص", hue:"#c98a2e", feats:["مسبح خارجي","ألعاب أطفال","حديقة","غرفة نوم"], full:70, fri:80, night:20, soon:true},
+];
+// الحجوزات تأتي من تبويب "الموقع" في جدول الحجوزات، منشور على الويب بصيغة CSV (تواريخ وأرقام شاليهات فقط)
+const BOOKINGS_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vR8iBRz1YOY3zfC0gCoiqK-IttvBIYrgsN-ZgDgM-IIwC5XKvYhltaUuTeLk4wr6oR8zI6oiEOF5svW/pub?gid=40&single=true&output=csv";
+// أيام ذروة غير الجمعة (أعياد وإجازات رسمية)
+const PEAK = ["2026-11-18","2026-11-19","2026-11-20"];
+let BOOKED = {};
+// =================================
+
+const MONTHS=["يناير","فبراير","مارس","أبريل","مايو","يونيو","يوليو","أغسطس","سبتمبر","أكتوبر","نوفمبر","ديسمبر"];
+const DAYS=["الأحد","الإثنين","الثلاثاء","الأربعاء","الخميس","الجمعة","السبت"];
+const DOW_SHORT=["سبت","أحد","إثنين","ثلاثاء","أربعاء","خميس","جمعة"]; // week starts Saturday
+const $=id=>document.getElementById(id);
+const pad=n=>String(n).padStart(2,"0");
+const key=d=>`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+const today=new Date();today.setHours(0,0,0,0);
+
+const state={chalet:null, y:today.getFullYear(), m:today.getMonth(), date:null};
+const chalet=()=>CHALETS.find(c=>c.id===state.chalet);
+const isBooked=(id,k)=>(BOOKED[id]||[]).includes(k);
+const isPeak=d=>d.getDay()===5||PEAK.includes(key(d));
+const OPEN=CHALETS.filter(c=>!c.soon); // chalets under construction are not bookable yet
+const freeOn=k=>OPEN.filter(c=>!isBooked(c.id,k));
+
+// cards + price table
+$("chaletCards").innerHTML=CHALETS.map(c=>`
+  <article class="chalet${c.soon?" is-soon":""}">
+    ${c.photos?`<button type="button" class="pic has-photo" data-gallery="${c.id}" style="background-image:url(${c.photos[0]})" aria-label="صور ${c.name}"><span class="count">عرض الصور (${c.photos.length})</span></button>`:`<div class="pic" style="background:linear-gradient(160deg,${c.hue},#14213a)"><b>${c.id}</b>${c.soon?`<span class="badge">قريباً</span>`:""}</div>`}
+    <div class="body">
+      <h3>${c.name}</h3><div class="meta">${c.cap}</div>
+      <ul>${c.feats.map(f=>`<li>${f}</li>`).join("")}</ul>
+      <div class="foot">${c.soon?`<span class="soon">قيد البناء · قريباً</span>`:`<span class="price num">${c.full} ر.ع <small>/ يوم</small></span><a class="btn" href="#book">شوف الأيام المتاحة</a>`}</div>
+    </div>
+  </article>`).join("");
+$("priceRows").innerHTML=CHALETS.map(c=>c.soon?`<tr><td><b>${c.name}</b></td><td colspan="3"><span class="soon">قيد البناء · قريباً</span></td></tr>`:`<tr><td><b>${c.name}</b></td><td>${c.cap}</td><td class="num">${c.full} ر.ع</td><td class="num">${c.fri} ر.ع</td></tr>`).join("");
+
+// one shared calendar: a day is open while at least one chalet is free
+function renderCal(){
+  $("monthLabel").textContent=`${MONTHS[state.m]} ${state.y}`;
+  $("prev").disabled=state.y===today.getFullYear()&&state.m===today.getMonth();
+  const first=new Date(state.y,state.m,1), days=new Date(state.y,state.m+1,0).getDate();
+  const offset=(first.getDay()+1)%7; // Saturday = 0
+  let h=DOW_SHORT.map(d=>`<div class="dow">${d}</div>`).join("")+"<div></div>".repeat(offset);
+  for(let i=1;i<=days;i++){
+    const d=new Date(state.y,state.m,i),k=key(d),free=freeOn(k).length;
+    const past=d<today,full=free===0;
+    let cls="day";
+    if(past)cls+=" past"; else if(full)cls+=" busy";
+    if(state.date&&key(state.date)===k)cls+=" sel";
+    const count=past||full?"":`<small>${free}/${OPEN.length}</small>`;
+    h+=`<button type="button" class="${cls}" data-day="${k}" ${past||full?"disabled":""} aria-label="${i} ${MONTHS[state.m]}، ${past?"انتهى":full?"كل الشاليهات محجوزة":free+" شاليهات متاحة"}">${i}${count}</button>`;
+  }
+  $("grid").innerHTML=h;
+}
+$("grid").addEventListener("click",e=>{
+  const b=e.target.closest("[data-day]"); if(!b||b.disabled)return;
+  const [y,m,d]=b.dataset.day.split("-").map(Number); state.date=new Date(y,m-1,d);
+  if(state.chalet&&isBooked(state.chalet,b.dataset.day))state.chalet=null;
+  render();
+  $("avail").scrollIntoView({behavior:"smooth",block:"nearest"});
+});
+$("prev").onclick=()=>{if(--state.m<0){state.m=11;state.y--}renderCal()};
+$("next").onclick=()=>{if(++state.m>11){state.m=0;state.y++}renderCal()};
+
+// only the chalets free on the chosen day
+function renderAvail(){
+  if(!state.date){$("avail").hidden=true;return}
+  const free=freeOn(key(state.date)), peak=isPeak(state.date);
+  $("avail").hidden=false;
+  $("availTitle").textContent=`الشاليهات المتاحة يوم ${DAYS[state.date.getDay()]} ${state.date.getDate()} ${MONTHS[state.date.getMonth()]} (${free.length})`;
+  $("availList").innerHTML=free.map(c=>`
+    <button type="button" class="pick" data-chalet="${c.id}" aria-pressed="${c.id===state.chalet}">
+      <i style="background:${c.hue}"></i>
+      <span><b>${c.name}</b><small>${c.cap} · ${c.feats.slice(0,2).join("، ")}</small></span>
+      <span class="num">${peak?c.fri:c.full} ر.ع</span>
+    </button>`).join("");
+}
+$("availList").addEventListener("click",e=>{
+  const b=e.target.closest("[data-chalet]"); if(!b)return;
+  state.chalet=+b.dataset.chalet; render();
+});
+
+const TYPE_LABEL={stay:"إقامة مع مبيت (الدخول 11:00 ص، الخروج 8:00 ص اليوم التالي)"}; // one booking type, fixed price
+function price(){
+  const c=chalet(), t=document.querySelector("input[name=type]:checked").value;
+  if(!state.date||!c)return null;
+  return isPeak(state.date)?c.fri:c.full;
+}
+function renderForm(){
+  const c=chalet(), t=document.querySelector("input[name=type]:checked").value;
+  const dateTxt=state.date?`${DAYS[state.date.getDay()]} ${state.date.getDate()} ${MONTHS[state.date.getMonth()]} ${state.date.getFullYear()}`:"";
+  $("selDate").textContent=!state.date?"اختر يوماً من التقويم":!c?"اختر شاليهاً من المتاحة":`${c.name} · ${dateTxt}`;
+  $("sumChalet").textContent=`الشاليه: ${c?c.name:"–"}`;
+  $("sumType").textContent=`النوع: ${TYPE_LABEL[t]}`;
+  const p=price(); $("total").textContent=p==null?"–":`${p} ر.ع`;
+  const name=$("name").value.trim(), phone=$("phone").value.trim();
+  const ready=state.date&&c&&name&&phone.replace(/\D/g,"").length>=8;
+  $("hint").textContent=!state.date?"١. اختر اليوم من التقويم.":!c?"٢. اختر الشاليه من القائمة تحت التقويم.":"٣. اكتب اسمك ورقمك لتفعيل الزر.";
+  $("hint").hidden=!!ready;
+  const send=$("send");
+  send.setAttribute("aria-disabled",ready?"false":"true");
+  if(ready){
+    const msg=["السلام عليكم، أرغب بحجز في شاليهات الشرف:",
+      `الشاليه: ${c.name}`,`التاريخ: ${dateTxt}`,
+      `النوع: ${TYPE_LABEL[t]}`,
+      `المبلغ: ${p} ر.ع`,`الاسم: ${name}`,`الهاتف: ${phone}`].join("\n");
+    send.href=`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`;
+  } else send.href="#";
+}
+$("form").addEventListener("input",renderForm);
+$("form").addEventListener("submit",e=>e.preventDefault());
+
+function render(){renderCal();renderAvail();renderForm()}
+
+// photo gallery
+const gal={c:null,i:0};
+function showPhoto(i){
+  const ph=gal.c.photos; gal.i=(i+ph.length)%ph.length;
+  $("gImg").src=ph[gal.i]; $("gImg").alt=`${gal.c.name}، صورة ${gal.i+1}`;
+  $("gCount").textContent=`${gal.i+1} / ${ph.length}`;
+  [...$("gThumbs").children].forEach((b,k)=>b.setAttribute("aria-current",String(k===gal.i)));
+  $("gThumbs").children[gal.i]?.scrollIntoView({block:"nearest",inline:"nearest"});
+}
+document.addEventListener("click",e=>{
+  const b=e.target.closest("[data-gallery]"); if(!b)return;
+  gal.c=CHALETS.find(c=>c.id===+b.dataset.gallery); $("gTitle").textContent=gal.c.name;
+  $("gThumbs").innerHTML=gal.c.photos.map((u,k)=>`<button type="button" data-k="${k}" style="background-image:url(${u})" aria-label="صورة ${k+1}"></button>`).join("");
+  $("gallery").showModal(); showPhoto(0);
+});
+$("gThumbs").addEventListener("click",e=>{const b=e.target.closest("[data-k]");if(b)showPhoto(+b.dataset.k)});
+$("gPrev").onclick=()=>showPhoto(gal.i-1);
+$("gNext").onclick=()=>showPhoto(gal.i+1);
+$("gClose").onclick=()=>$("gallery").close();
+$("gallery").addEventListener("click",e=>{if(e.target===$("gallery"))$("gallery").close()});
+$("gallery").addEventListener("keydown",e=>{if(e.key==="ArrowLeft")showPhoto(gal.i+1);if(e.key==="ArrowRight")showPhoto(gal.i-1)});
+
+// contact
+$("phoneTxt").textContent=PHONE_DISPLAY;
+$("waFooter").href=`https://wa.me/${WHATSAPP}`;
+$("copyBtn").onclick=()=>{
+  const done=()=>{$("copyBtn").textContent="تم النسخ";setTimeout(()=>$("copyBtn").textContent="نسخ الرقم",1500)};
+  try{navigator.clipboard.writeText(PHONE_DISPLAY).then(done,()=>selectPhone())}catch(e){selectPhone()}
+};
+function selectPhone(){const r=document.createRange();r.selectNodeContents($("phoneTxt"));const s=getSelection();s.removeAllRanges();s.addRange(r)}
+
+// start on next month when the current one is nearly over
+if(new Date(state.y,state.m+1,0).getDate()-today.getDate()<5){if(++state.m>11){state.m=0;state.y++}}
+render();
+
+// availability: read the booked nights when the page opens
+(async()=>{
+  if(!BOOKINGS_URL)return;
+  $("calStatus").textContent="جارٍ تحميل الأيام المتاحة…";
+  try{
+    const r=await fetch(BOOKINGS_URL,{cache:"no-store"});
+    if(!r.ok)throw new Error(r.status);
+    // rows: date,1,2,3 — a "1" under a chalet number means that night is booked
+    const [head,...rows]=(await r.text()).trim().split(/\r?\n/).map(l=>l.split(","));
+    const next={};
+    rows.forEach(c=>head.forEach((h,i)=>{if(i&&/^\d+$/.test(h)&&String(c[i]||"").trim())(next[h]=next[h]||[]).push(c[0])}));
+    BOOKED=next;
+    if(state.chalet&&state.date&&isBooked(state.chalet,key(state.date)))state.chalet=null;
+    $("calStatus").textContent="";render();
+  }catch(e){
+    $("calStatus").textContent="ما قدرنا نحمّل الأيام المحجوزة الآن. أرسل طلبك وبنأكد لك التوفر على واتساب.";
+  }
+})();
+</script>
+</body>
+</html>
