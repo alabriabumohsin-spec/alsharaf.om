@@ -96,6 +96,11 @@ nav a:hover{opacity:1;color:var(--brass)}
 .chalet .pic.has-photo{border:0;padding:0;width:100%;cursor:zoom-in;background-size:cover;background-position:center;background-color:var(--line)}
 .chalet .pic .count{position:absolute;bottom:10px;inset-inline-start:10px;background:rgba(10,16,32,.72);color:#fff;font-size:.78rem;border-radius:999px;padding:4px 12px}
 .chalet .pic.has-photo:hover .count{background:var(--brass);color:var(--brass-ink)}
+dialog.share-dlg{border:0;padding:0;background:transparent;color:#fff;max-width:100vw;max-height:100dvh;overflow:visible}
+dialog.share-dlg::backdrop{background:rgba(6,10,20,.92)}
+.share-dlg img{display:block;height:min(74dvh,calc((100vw - 32px)*16/9));width:auto;margin:0 auto;border-radius:16px;box-shadow:0 10px 40px rgba(0,0,0,.5)}
+.sc-row{display:flex;gap:10px;justify-content:center;margin-top:14px}
+.sc-x{position:fixed;top:12px;inset-inline-end:16px;background:none;border:0;color:#fff;font-size:2.2rem;line-height:1;cursor:pointer}
 dialog.gallery{border:0;padding:0;background:transparent;max-width:min(1100px,100vw);width:100%;color:#fff}
 dialog.gallery::backdrop{background:rgba(6,10,20,.92)}
 .g-wrap{display:flex;flex-direction:column;gap:10px;padding:12px max(16px,env(safe-area-inset-left,0px))}
@@ -340,6 +345,11 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:20px;
   </div>
 </footer>
 
+<dialog class="share-dlg" id="shareDlg" aria-label="صورة التقويم">
+  <button type="button" class="sc-x" id="scClose" aria-label="إغلاق">×</button>
+  <img id="scImg" alt="صورة تقويم الأيام المتاحة">
+  <div class="sc-row"><button type="button" class="btn" id="scShare">مشاركة</button><button type="button" class="btn ghost" id="scSave">حفظ الصورة</button></div>
+</dialog>
 <dialog class="gallery" id="gallery" aria-label="معرض الصور">
   <div class="g-wrap" dir="rtl">
     <div class="g-top"><b id="gTitle"></b><span class="num" id="gCount"></span><button type="button" class="g-btn" id="gClose" aria-label="إغلاق">×</button></div>
@@ -584,18 +594,28 @@ async function drawStory(){
   T("+968 7157 2244",W/2,fy+125,`500 32px ${B}`,SAND);
   return c;
 }
+const sc={blob:null,name:"",url:""};
 $("shareCal").onclick=async()=>{
   const btn=$("shareCal"),old=btn.innerHTML;btn.disabled=true;btn.textContent="جارٍ تجهيز الصورة…";
   try{
     const c=await drawStory();
-    const blob=await new Promise(r=>c.toBlob(r,"image/png"));
-    const name=`تقويم-شاليهات-الشرف-${MONTHS[state.m]}-${state.y}.png`;
-    const file=new File([blob],name,{type:"image/png"});
-    if(navigator.canShare&&navigator.canShare({files:[file]}))await navigator.share({files:[file],title:"شاليهات الشرف",text:"الأيام المتاحة للحجز · alsharaf.om"});
-    else{const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),4000)}
-  }catch(e){if(e&&e.name!=="AbortError")alert("ما قدرنا نجهز الصورة، حاول مرة ثانية.")}
+    sc.blob=await new Promise(r=>c.toBlob(r,"image/png"));
+    sc.name=`تقويم-شاليهات-الشرف-${MONTHS[state.m]}-${state.y}.png`;
+    if(sc.url)URL.revokeObjectURL(sc.url);sc.url=URL.createObjectURL(sc.blob);
+    $("scImg").src=sc.url;$("shareDlg").showModal();
+  }catch(e){alert("ما قدرنا نجهز الصورة، حاول مرة ثانية.")}
   finally{btn.disabled=false;btn.innerHTML=old}
 };
+$("scShare").onclick=async()=>{
+  const file=new File([sc.blob],sc.name,{type:"image/png"});
+  if(navigator.canShare&&navigator.canShare({files:[file]})){
+    try{await navigator.share({files:[file],title:"شاليهات الشرف",text:"الأيام المتاحة للحجز · alsharaf.om"})}catch(e){}
+  }else $("scSave").click();
+};
+$("scSave").onclick=()=>{const a=document.createElement("a");a.href=sc.url;a.download=sc.name;document.body.appendChild(a);a.click();a.remove()};
+$("scClose").onclick=()=>$("shareDlg").close();
+$("shareDlg").onclick=e=>{if(e.target.id==="shareDlg")$("shareDlg").close()};
+
 </script>
 </body>
 </html>
