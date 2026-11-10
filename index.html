@@ -162,6 +162,8 @@ td.num{font-weight:700}
 .day:not(.busy):not(.past):hover{border-color:var(--brass)}
 .legend{display:flex;flex-wrap:wrap;gap:14px;margin-top:12px;font-size:.8rem;color:var(--muted)}
 .legend i{display:inline-block;width:12px;height:12px;border-radius:4px;vertical-align:-1px;margin-inline-end:6px}
+.share-cal{width:100%;margin-top:12px}
+.share-cal:disabled{opacity:.5;cursor:wait}
 .note{font-size:.85rem;color:var(--muted);background:var(--peak-bg);border-radius:10px;padding:10px 12px;margin-top:14px}
 .avail{margin-top:16px;border-top:1px solid var(--line);padding-top:14px}
 .avail h4{margin:0 0 8px;font-size:.9rem}
@@ -264,6 +266,7 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:20px;
           <div class="picks" id="availList" role="group" aria-label="الشاليهات المتاحة"></div>
         </div>
         <div class="note"><b>أوقات الذروة:</b> يوم الجمعة والأعياد والإجازات الرسمية وإجازات المدارس تنحجز بسرعة، فاحجز مبكراً.</div>
+        <button type="button" class="btn share-cal" id="shareCal" disabled><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M7 8l5-5 5 5M5 14v5a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-5"/></svg>شارك التقويم (ستوري)</button>
       </div>
 
       <form class="panel" id="form">
@@ -475,7 +478,7 @@ function renderForm(){
 $("form").addEventListener("input",renderForm);
 $("form").addEventListener("submit",e=>e.preventDefault());
 
-function render(){renderCal();renderAvail();renderForm()}
+function render(){renderCal();renderAvail();renderForm();$("shareCal").disabled=!LOADED}
 
 // photo gallery
 const gal={c:null,i:0};
@@ -531,6 +534,68 @@ render();
     $("calStatus").textContent="ما قدرنا نحمّل الأيام المحجوزة الآن. أرسل طلبك وبنأكد لك التوفر على واتساب.";
   }
 })();
+
+// share the shown month as a story-size image (1080x1920)
+async function drawStory(){
+  await Promise.all(['700 80px "El Messiri"','500 30px "Tajawal"','700 30px "Tajawal"'].map(f=>document.fonts.load(f).catch(()=>{})));
+  const W=1080,H=1920,c=document.createElement("canvas");c.width=W;c.height=H;
+  const x=c.getContext("2d");x.direction="rtl";x.textBaseline="middle";
+  const NAVY="#14213a",GOLD="#c99a3e",SAND="#f3ecdc",CARD="#fffdf8",INK="#1b2333",MUTED="#6b7285",OK="#2f7d55",OKBG="#e3f1e8",BUSY="#ecebe7";
+  const D='"El Messiri","Tajawal",sans-serif',B='"Tajawal",sans-serif';
+  const T=(t,px,py,font,col,al="center")=>{x.font=font;x.fillStyle=col;x.textAlign=al;x.fillText(t,px,py)};
+  const rr=(px,py,w,h,r,fill)=>{x.beginPath();x.roundRect(px,py,w,h,r);x.fillStyle=fill;x.fill()};
+  // background: the mountain photo under a navy wash
+  x.fillStyle=NAVY;x.fillRect(0,0,W,H);
+  try{const img=new Image();img.src="images/hero.jpg";await img.decode();
+    const s=Math.max(W/img.width,H/img.height);x.globalAlpha=.35;
+    x.drawImage(img,(W-img.width*s)/2,(H-img.height*s)/2,img.width*s,img.height*s);x.globalAlpha=1}catch(e){}
+  const g=x.createLinearGradient(0,0,0,H);g.addColorStop(0,"rgba(20,33,58,.55)");g.addColorStop(1,"rgba(20,33,58,.92)");x.fillStyle=g;x.fillRect(0,0,W,H);
+  // header (kept below Instagram's top bar)
+  x.font=`700 80px ${D}`;const tw=x.measureText("شاليهات الشرف").width;
+  x.save();x.translate(W/2+tw/2+10,296);x.strokeStyle=GOLD;x.lineWidth=5;x.scale(2.4,2.4);x.translate(-16,-16);
+  x.beginPath();x.moveTo(5,29);x.lineTo(5,15);x.arc(16,15,11,Math.PI,0);x.lineTo(27,29);x.moveTo(11,29);x.lineTo(11,17);x.arc(16,17,5,Math.PI,0);x.lineTo(21,29);x.moveTo(3,29);x.lineTo(29,29);x.stroke();x.restore();
+  T("شاليهات الشرف",W/2-40,300,`700 80px ${D}`,SAND);
+  T("الأيام المتاحة للحجز",W/2,395,`500 36px ${B}`,GOLD);
+  // calendar card
+  const first=new Date(state.y,state.m,1),days=new Date(state.y,state.m+1,0).getDate(),off=(first.getDay()+1)%7;
+  const rows=Math.ceil((off+days)/7),cellH=120,top0=660;
+  const cx=60,cy=460,cw=W-120,chH=(top0-cy)+rows*(cellH+10)+110;rr(cx,cy,cw,chH,40,CARD);
+  T(`${MONTHS[state.m]} ${state.y}`,W/2,535,`700 58px ${D}`,INK);
+  const colW=(cw-60)/7,right=cx+cw-30;
+  DOW_SHORT.forEach((d,i)=>T(d,right-colW*i-colW/2,615,`500 28px ${B}`,MUTED));
+  for(let i=1;i<=days;i++){
+    const idx=off+i-1,col=idx%7,row=Math.floor(idx/7);
+    const px=right-colW*(col+1)+6,py=top0+row*(cellH+10),w=colW-12;
+    const d=new Date(state.y,state.m,i),k=key(d),free=freeOn(k).length,past=d<today,full=free===0;
+    if(past){T(String(i),px+w/2,py+cellH/2,`500 38px ${B}`,"#b7bcc6");continue}
+    rr(px,py,w,cellH,22,full?BUSY:OKBG);
+    T(String(i),px+w/2,py+46,`700 42px ${B}`,full?"#9aa0aa":INK);
+    if(full){x.strokeStyle="#9aa0aa";x.lineWidth=3;x.beginPath();x.moveTo(px+w/2-26,py+46);x.lineTo(px+w/2+26,py+46);x.stroke();
+      T("محجوز",px+w/2,py+90,`500 24px ${B}`,"#9aa0aa")}
+    else T(`${free}/${OPEN.length}`,px+w/2,py+90,`700 26px ${B}`,OK);
+  }
+  // legend
+  const ly=cy+chH-55,fy=Math.max(cy+chH+110,1560);
+  rr(W/2+170,ly-16,32,32,8,OKBG);T("متاح · الرقم عدد الشاليهات المتاحة",W/2+150,ly,`500 26px ${B}`,MUTED,"right");
+  rr(W/2-300,ly-16,32,32,8,BUSY);T("محجوز",W/2-320,ly,`500 26px ${B}`,MUTED,"right");
+  // footer (kept above Instagram's bottom bar)
+  T("احجز يومك الآن",W/2,fy,`700 50px ${D}`,SAND);
+  x.direction="ltr";T("alsharaf.om",W/2,fy+70,`700 44px ${B}`,GOLD);
+  T("+968 7157 2244",W/2,fy+125,`500 32px ${B}`,SAND);
+  return c;
+}
+$("shareCal").onclick=async()=>{
+  const btn=$("shareCal"),old=btn.innerHTML;btn.disabled=true;btn.textContent="جارٍ تجهيز الصورة…";
+  try{
+    const c=await drawStory();
+    const blob=await new Promise(r=>c.toBlob(r,"image/png"));
+    const name=`تقويم-شاليهات-الشرف-${MONTHS[state.m]}-${state.y}.png`;
+    const file=new File([blob],name,{type:"image/png"});
+    if(navigator.canShare&&navigator.canShare({files:[file]}))await navigator.share({files:[file],title:"شاليهات الشرف",text:"الأيام المتاحة للحجز · alsharaf.om"});
+    else{const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),4000)}
+  }catch(e){if(e&&e.name!=="AbortError")alert("ما قدرنا نجهز الصورة، حاول مرة ثانية.")}
+  finally{btn.disabled=false;btn.innerHTML=old}
+};
 </script>
 </body>
 </html>
