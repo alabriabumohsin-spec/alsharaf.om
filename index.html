@@ -112,6 +112,12 @@ dialog.gallery::backdrop{background:rgba(6,10,20,.92)}
 .g-btn:hover{background:var(--brass);color:var(--brass-ink);border-color:var(--brass)}
 .g-prev,.g-next{position:absolute;top:50%;transform:translateY(-50%)}
 .g-prev{right:8px}.g-next{left:8px}
+[dir=ltr] .g-prev{right:auto;left:8px}[dir=ltr] .g-next{left:auto;right:8px}
+.h-act{display:flex;align-items:center;gap:8px}
+[lang=en] .logo{white-space:nowrap}
+@media (max-width:420px){[lang=en] .logo{font-size:1.1rem}}
+.lang-btn{border:1px solid rgba(243,236,220,.45);background:transparent;color:var(--night-ink);border-radius:999px;padding:6px 12px;font:700 .85rem var(--body);cursor:pointer;line-height:1.2}
+.lang-btn:hover{border-color:var(--brass);color:var(--brass)}
 .g-thumbs{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px}
 .g-thumbs button{flex:0 0 auto;width:72px;height:54px;border-radius:8px;border:2px solid transparent;padding:0;background-size:cover;background-position:center;cursor:pointer;opacity:.6}
 .g-thumbs button[aria-current="true"]{border-color:var(--brass);opacity:1}
@@ -227,12 +233,12 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:20px;
 <body>
 
 <div class="page-bg" aria-hidden="true"></div>
-<div dir="rtl" lang="ar">
+<div dir="rtl" lang="ar" id="app">
 <header>
   <div class="wrap">
     <a class="logo" href="#top"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 29V15a11 11 0 0 1 22 0v14"/><path d="M11 29V17a5 5 0 0 1 10 0v12"/><path d="M3 29h26"/></svg>شاليهات الشرف</a>
     <nav><a href="#chalets">الشاليهات</a><a href="#prices">الأسعار</a><a href="#book">الحجز</a><a href="#location">الموقع</a><a href="#contact">تواصل معنا</a></nav>
-    <a class="btn" href="#book" style="padding:8px 18px;font-size:.9rem">احجز</a>
+    <div class="h-act"><button type="button" class="lang-btn" id="langBtn" lang="en" aria-label="English">EN</button><a class="btn" href="#book" style="padding:8px 18px;font-size:.9rem">احجز</a></div>
   </div>
 </header>
 
@@ -351,7 +357,7 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:20px;
   <div class="sc-row"><button type="button" class="btn" id="scShare">مشاركة</button><button type="button" class="btn ghost" id="scSave">حفظ الصورة</button></div>
 </dialog>
 <dialog class="gallery" id="gallery" aria-label="معرض الصور">
-  <div class="g-wrap" dir="rtl">
+  <div class="g-wrap" id="gWrap" dir="rtl">
     <div class="g-top"><b id="gTitle"></b><span class="num" id="gCount"></span><button type="button" class="g-btn" id="gClose" aria-label="إغلاق">×</button></div>
     <div class="g-stage">
       <img id="gImg" alt="">
@@ -369,14 +375,14 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:20px;
 const WHATSAPP = "96871572244";         // رقم واتساب بدون +
 const PHONE_DISPLAY = "+968 7157 2244";  // الرقم كما يظهر
 const CHALETS = [
-  {id:1, name:"شاليه القمر", cap:"حتى 15 شخص", hue:"#4a5578", feats:["مسبح خارجي","جلسة مظللة بطاولة طعام","شواية","ألعاب أطفال","غرفتا نوم","صالة ومطبخ"], full:60, fri:65, night:20,
+  {id:1, name:"شاليه القمر", nameEn:"Al Qamar Chalet", capEn:"Up to 15 people", featsEn:["Outdoor pool","Shaded seating with dining table","BBQ grill","Kids' play area","2 bedrooms","Living room & kitchen"], cap:"حتى 15 شخص", hue:"#4a5578", feats:["مسبح خارجي","جلسة مظللة بطاولة طعام","شواية","ألعاب أطفال","غرفتا نوم","صالة ومطبخ"], full:60, fri:65, night:20,
    photos:["images/qamar/qamar-01.jpg","images/qamar/qamar-04.jpg","images/qamar/qamar-05.jpg","images/qamar/qamar-06.jpg","images/qamar/qamar-07.jpg","images/qamar/qamar-09.jpg","images/qamar/qamar-10.jpg","images/qamar/qamar-11.jpg","images/qamar/qamar-12.jpg"]},
-  {id:2, name:"شاليه الرمان",  cap:"حتى 6 أشخاص", hue:"#8e2b3a", feats:["غرفتا نوم","دورتا مياه","مطبخ صغير","جلسة خارجية"], full:50, fri:55, night:20,
+  {id:2, name:"شاليه الرمان", nameEn:"Al Rumman Chalet", capEn:"Up to 6 people", featsEn:["2 bedrooms","2 bathrooms","Small kitchen","Outdoor seating"],  cap:"حتى 6 أشخاص", hue:"#8e2b3a", feats:["غرفتا نوم","دورتا مياه","مطبخ صغير","جلسة خارجية"], full:50, fri:55, night:20,
    photos:["images/rumman/rumman-02.jpg","images/rumman/rumman-01.jpg","images/rumman/rumman-03.jpg","images/rumman/rumman-04.jpg","images/rumman/rumman-05.jpg","images/rumman/rumman-06.jpg","images/rumman/rumman-07.jpg"]},
-  {id:3, name:"شاليه الزيتون",  cap:"حتى 6 أشخاص", hue:"#5d6b34", feats:["غرفتا نوم","دورتا مياه","مطبخ صغير","جلسة خارجية"], full:50, fri:55, night:25,
+  {id:3, name:"شاليه الزيتون", nameEn:"Al Zaytoon Chalet", capEn:"Up to 6 people", featsEn:["2 bedrooms","2 bathrooms","Small kitchen","Outdoor seating"],  cap:"حتى 6 أشخاص", hue:"#5d6b34", feats:["غرفتا نوم","دورتا مياه","مطبخ صغير","جلسة خارجية"], full:50, fri:55, night:25,
    photos:["images/zaytoon/zaytoon-04.jpg","images/zaytoon/zaytoon-01.jpg","images/zaytoon/zaytoon-02.jpg","images/zaytoon/zaytoon-03.jpg","images/zaytoon/zaytoon-05.jpg","images/zaytoon/zaytoon-06.jpg"]},
-  {id:4, name:"شاليه الخوخ", cap:"حتى 12 شخص", hue:"#c06a4f", feats:["مسبح خاص","جلسة شواء","مطبخ"], full:50, fri:60, night:20, soon:true},
-  {id:5, name:"شاليه المشمش",  cap:"حتى 25 شخص", hue:"#c98a2e", feats:["مسبح خارجي","ألعاب أطفال","حديقة","غرفة نوم"], full:70, fri:80, night:20, soon:true},
+  {id:4, name:"شاليه الخوخ", nameEn:"Al Khokh Chalet", capEn:"Up to 12 people", featsEn:["Private pool","BBQ seating","Kitchen"], cap:"حتى 12 شخص", hue:"#c06a4f", feats:["مسبح خاص","جلسة شواء","مطبخ"], full:50, fri:60, night:20, soon:true},
+  {id:5, name:"شاليه المشمش", nameEn:"Al Mishmish Chalet", capEn:"Up to 25 people", featsEn:["Outdoor pool","Kids' play area","Garden","Bedroom"],  cap:"حتى 25 شخص", hue:"#c98a2e", feats:["مسبح خارجي","ألعاب أطفال","حديقة","غرفة نوم"], full:70, fri:80, night:20, soon:true},
 ];
 // الحجوزات تأتي من تبويب "الموقع" في جدول الحجوزات، منشور على الويب بصيغة CSV (تواريخ وأرقام شاليهات فقط)
 const BOOKINGS_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vR8iBRz1YOY3zfC0gCoiqK-IttvBIYrgsN-ZgDgM-IIwC5XKvYhltaUuTeLk4wr6oR8zI6oiEOF5svW/pub?gid=40&single=true&output=csv";
@@ -386,9 +392,16 @@ let BOOKED = {};
 let LOADED = false; // days stay hidden until the booked nights have been read
 // =================================
 
-const MONTHS=["يناير","فبراير","مارس","أبريل","مايو","يونيو","يوليو","أغسطس","سبتمبر","أكتوبر","نوفمبر","ديسمبر"];
-const DAYS=["الأحد","الإثنين","الثلاثاء","الأربعاء","الخميس","الجمعة","السبت"];
-const DOW_SHORT=["سبت","أحد","إثنين","ثلاثاء","أربعاء","خميس","جمعة"]; // week starts Saturday
+const AR={months:["يناير","فبراير","مارس","أبريل","مايو","يونيو","يوليو","أغسطس","سبتمبر","أكتوبر","نوفمبر","ديسمبر"],
+  days:["الأحد","الإثنين","الثلاثاء","الأربعاء","الخميس","الجمعة","السبت"],dow:["سبت","أحد","إثنين","ثلاثاء","أربعاء","خميس","جمعة"]};
+const ENL={months:["January","February","March","April","May","June","July","August","September","October","November","December"],
+  days:["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],dow:["Sat","Sun","Mon","Tue","Wed","Thu","Fri"]};
+// language: Arabic by default; ?lang=en or the button switches to English and is remembered
+let LANG=(()=>{try{const q=new URLSearchParams(location.search).get("lang");if(q==="en"||q==="ar")return q;return localStorage.getItem("lang")==="en"?"en":"ar"}catch(e){return "ar"}})();
+const tr=(ar,en)=>LANG==="en"?en:ar;
+let MONTHS=AR.months, DAYS=AR.days, DOW_SHORT=AR.dow; // week starts Saturday
+const cName=c=>tr(c.name,c.nameEn), cCap=c=>tr(c.cap,c.capEn), cFeats=c=>LANG==="en"?c.featsEn:c.feats;
+const cur=v=>tr(`${v} ر.ع`,`${v} OMR`);
 const $=id=>document.getElementById(id);
 const pad=n=>String(n).padStart(2,"0");
 const key=d=>`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
@@ -402,16 +415,19 @@ const OPEN=CHALETS.filter(c=>!c.soon); // chalets under construction are not boo
 const freeOn=k=>OPEN.filter(c=>!isBooked(c.id,k));
 
 // cards + price table
+function renderStatic(){
+const soonTxt=tr("قيد البناء · قريباً","Under construction · coming soon");
 $("chaletCards").innerHTML=CHALETS.map(c=>`
   <article class="chalet${c.soon?" is-soon":""}">
-    ${c.photos?`<button type="button" class="pic has-photo" data-gallery="${c.id}" style="background-image:url(${c.photos[0]})" aria-label="صور ${c.name}"><span class="count">عرض الصور (${c.photos.length})</span></button>`:`<div class="pic" style="background:linear-gradient(160deg,${c.hue},#14213a)"><b>${c.id}</b>${c.soon?`<span class="badge">قريباً</span>`:""}</div>`}
+    ${c.photos?`<button type="button" class="pic has-photo" data-gallery="${c.id}" style="background-image:url(${c.photos[0]})" aria-label="${tr("صور","Photos of")} ${cName(c)}"><span class="count">${tr("عرض الصور","View photos")} (${c.photos.length})</span></button>`:`<div class="pic" style="background:linear-gradient(160deg,${c.hue},#14213a)"><b>${c.id}</b>${c.soon?`<span class="badge">${tr("قريباً","Soon")}</span>`:""}</div>`}
     <div class="body">
-      <h3>${c.name}</h3><div class="meta">${c.cap}</div>
-      <ul>${c.feats.map(f=>`<li>${f}</li>`).join("")}</ul>
-      <div class="foot">${c.soon?`<span class="soon">قيد البناء · قريباً</span>`:`<span class="price num">${c.full} ر.ع <small>/ يوم</small></span><a class="btn" href="#book">شوف الأيام المتاحة</a>`}</div>
+      <h3>${cName(c)}</h3><div class="meta">${cCap(c)}</div>
+      <ul>${cFeats(c).map(f=>`<li>${f}</li>`).join("")}</ul>
+      <div class="foot">${c.soon?`<span class="soon">${soonTxt}</span>`:`<span class="price num">${cur(c.full)} <small>${tr("/ يوم","/ night")}</small></span><a class="btn" href="#book">${tr("شوف الأيام المتاحة","See free days")}</a>`}</div>
     </div>
   </article>`).join("");
-$("priceRows").innerHTML=CHALETS.map(c=>c.soon?`<tr><td><b>${c.name}</b></td><td colspan="3"><span class="soon">قيد البناء · قريباً</span></td></tr>`:`<tr><td><b>${c.name}</b></td><td>${c.cap}</td><td class="num">${c.full} ر.ع</td><td class="num">${c.fri} ر.ع</td></tr>`).join("");
+$("priceRows").innerHTML=CHALETS.map(c=>c.soon?`<tr><td><b>${cName(c)}</b></td><td colspan="3"><span class="soon">${soonTxt}</span></td></tr>`:`<tr><td><b>${cName(c)}</b></td><td>${cCap(c)}</td><td class="num">${cur(c.full)}</td><td class="num">${cur(c.fri)}</td></tr>`).join("");
+}
 
 // one shared calendar: a day is open while at least one chalet is free
 function renderCal(){
@@ -419,7 +435,7 @@ function renderCal(){
   $("prev").disabled=state.y===today.getFullYear()&&state.m===today.getMonth();
   const first=new Date(state.y,state.m,1), days=new Date(state.y,state.m+1,0).getDate();
   const offset=(first.getDay()+1)%7; // Saturday = 0
-  if(!LOADED){$("grid").innerHTML=`<div class="cal-loading" role="status"><span class="spin" aria-hidden="true"></span>جارٍ تحميل الأيام المتاحة…</div>`;return}
+  if(!LOADED){$("grid").innerHTML=`<div class="cal-loading" role="status"><span class="spin" aria-hidden="true"></span>${tr("جارٍ تحميل الأيام المتاحة…","Loading available days…")}</div>`;return}
   let h=DOW_SHORT.map(d=>`<div class="dow">${d}</div>`).join("")+"<div></div>".repeat(offset);
   for(let i=1;i<=days;i++){
     const d=new Date(state.y,state.m,i),k=key(d),free=freeOn(k).length;
@@ -428,7 +444,7 @@ function renderCal(){
     if(past)cls+=" past"; else if(full)cls+=" busy";
     if(state.date&&key(state.date)===k)cls+=" sel";
     const count=past||full?"":`<small>${free}/${OPEN.length}</small>`;
-    h+=`<button type="button" class="${cls}" data-day="${k}" ${past||full?"disabled":""} aria-label="${i} ${MONTHS[state.m]}، ${past?"انتهى":full?"كل الشاليهات محجوزة":free+" شاليهات متاحة"}">${i}${count}</button>`;
+    h+=`<button type="button" class="${cls}" data-day="${k}" ${past||full?"disabled":""} aria-label="${i} ${MONTHS[state.m]}, ${past?tr("انتهى","past"):full?tr("كل الشاليهات محجوزة","all chalets booked"):free+tr(" شاليهات متاحة"," chalets free")}">${i}${count}</button>`;
   }
   $("grid").innerHTML=h;
 }
@@ -447,12 +463,12 @@ function renderAvail(){
   if(!state.date){$("avail").hidden=true;return}
   const free=freeOn(key(state.date)), peak=isPeak(state.date);
   $("avail").hidden=false;
-  $("availTitle").textContent=`الشاليهات المتاحة يوم ${DAYS[state.date.getDay()]} ${state.date.getDate()} ${MONTHS[state.date.getMonth()]} (${free.length})`;
+  $("availTitle").textContent=tr(`الشاليهات المتاحة يوم ${DAYS[state.date.getDay()]} ${state.date.getDate()} ${MONTHS[state.date.getMonth()]} (${free.length})`,`Chalets free on ${DAYS[state.date.getDay()]} ${state.date.getDate()} ${MONTHS[state.date.getMonth()]} (${free.length})`);
   $("availList").innerHTML=free.map(c=>`
     <button type="button" class="pick" data-chalet="${c.id}" aria-pressed="${c.id===state.chalet}">
       <i style="background:${c.hue}"></i>
-      <span><b>${c.name}</b><small>${c.cap} · ${c.feats.slice(0,2).join("، ")}</small></span>
-      <span class="num">${peak?c.fri:c.full} ر.ع</span>
+      <span><b>${cName(c)}</b><small>${cCap(c)} · ${cFeats(c).slice(0,2).join(tr("، ",", "))}</small></span>
+      <span class="num">${cur(peak?c.fri:c.full)}</span>
     </button>`).join("");
 }
 $("availList").addEventListener("click",e=>{
@@ -460,7 +476,7 @@ $("availList").addEventListener("click",e=>{
   state.chalet=+b.dataset.chalet; render();
 });
 
-const TYPE_LABEL={stay:"إقامة مع مبيت (الدخول 11:00 ص، الخروج 8:00 ص اليوم التالي)"}; // one booking type, fixed price
+const TYPE_LABEL={get stay(){return tr("إقامة مع مبيت (الدخول 11:00 ص، الخروج 8:00 ص اليوم التالي)","Overnight stay (check-in 11:00 AM, check-out 8:00 AM next day)")}}; // one booking type, fixed price
 function price(){
   const c=chalet(), t=document.querySelector("input[name=type]:checked").value;
   if(!state.date||!c)return null;
@@ -469,21 +485,23 @@ function price(){
 function renderForm(){
   const c=chalet(), t=document.querySelector("input[name=type]:checked").value;
   const dateTxt=state.date?`${DAYS[state.date.getDay()]} ${state.date.getDate()} ${MONTHS[state.date.getMonth()]} ${state.date.getFullYear()}`:"";
-  $("selDate").textContent=!state.date?"اختر يوماً من التقويم":!c?"اختر شاليهاً من المتاحة":`${c.name} · ${dateTxt}`;
-  $("sumChalet").textContent=`الشاليه: ${c?c.name:"–"}`;
-  $("sumType").textContent=`النوع: ${TYPE_LABEL[t]}`;
-  const p=price(); $("total").textContent=p==null?"–":`${p} ر.ع`;
+  $("selDate").textContent=!state.date?tr("اختر يوماً من التقويم","Pick a day on the calendar"):!c?tr("اختر شاليهاً من المتاحة","Pick one of the free chalets"):`${cName(c)} · ${dateTxt}`;
+  $("sumChalet").textContent=`${tr("الشاليه:","Chalet:")} ${c?cName(c):"–"}`;
+  $("sumType").textContent=`${tr("النوع:","Type:")} ${TYPE_LABEL[t]}`;
+  const p=price(); $("total").textContent=p==null?"–":cur(p);
   const name=$("name").value.trim(), phone=$("phone").value.trim();
   const ready=state.date&&c&&name&&phone.replace(/\D/g,"").length>=8;
-  $("hint").textContent=!state.date?"١. اختر اليوم من التقويم.":!c?"٢. اختر الشاليه من القائمة تحت التقويم.":"٣. اكتب اسمك ورقمك لتفعيل الزر.";
+  $("hint").textContent=!state.date?tr("١. اختر اليوم من التقويم.","1. Pick a day on the calendar."):!c?tr("٢. اختر الشاليه من القائمة تحت التقويم.","2. Pick a chalet from the list under the calendar."):tr("٣. اكتب اسمك ورقمك لتفعيل الزر.","3. Enter your name and number to turn on the button.");
   $("hint").hidden=!!ready;
   const send=$("send");
   send.setAttribute("aria-disabled",ready?"false":"true");
   if(ready){
-    const msg=["السلام عليكم، أرغب بحجز في شاليهات الشرف:",
+    const msg=(LANG==="en"?["Hello, I'd like to book at Al Sharaf Chalets:",
+      `Chalet: ${c.nameEn}`,`Date: ${dateTxt}`,`Type: ${TYPE_LABEL[t]}`,`Total: ${p} OMR`,`Name: ${name}`,`Phone: ${phone}`]
+      :["السلام عليكم، أرغب بحجز في شاليهات الشرف:",
       `الشاليه: ${c.name}`,`التاريخ: ${dateTxt}`,
       `النوع: ${TYPE_LABEL[t]}`,
-      `المبلغ: ${p} ر.ع`,`الاسم: ${name}`,`الهاتف: ${phone}`].join("\n");
+      `المبلغ: ${p} ر.ع`,`الاسم: ${name}`,`الهاتف: ${phone}`]).join("\n");
     send.href=`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`;
   } else send.href="#";
 }
@@ -496,15 +514,15 @@ function render(){renderCal();renderAvail();renderForm();$("shareCal").disabled=
 const gal={c:null,i:0};
 function showPhoto(i){
   const ph=gal.c.photos; gal.i=(i+ph.length)%ph.length;
-  $("gImg").src=ph[gal.i]; $("gImg").alt=`${gal.c.name}، صورة ${gal.i+1}`;
+  $("gImg").src=ph[gal.i]; $("gImg").alt=tr(`${gal.c.name}، صورة ${gal.i+1}`,`${gal.c.nameEn}, photo ${gal.i+1}`);
   $("gCount").textContent=`${gal.i+1} / ${ph.length}`;
   [...$("gThumbs").children].forEach((b,k)=>b.setAttribute("aria-current",String(k===gal.i)));
   $("gThumbs").children[gal.i]?.scrollIntoView({block:"nearest",inline:"nearest"});
 }
 document.addEventListener("click",e=>{
   const b=e.target.closest("[data-gallery]"); if(!b)return;
-  gal.c=CHALETS.find(c=>c.id===+b.dataset.gallery); $("gTitle").textContent=gal.c.name;
-  $("gThumbs").innerHTML=gal.c.photos.map((u,k)=>`<button type="button" data-k="${k}" style="background-image:url(${u})" aria-label="صورة ${k+1}"></button>`).join("");
+  gal.c=CHALETS.find(c=>c.id===+b.dataset.gallery); $("gTitle").textContent=cName(gal.c);
+  $("gThumbs").innerHTML=gal.c.photos.map((u,k)=>`<button type="button" data-k="${k}" style="background-image:url(${u})" aria-label="${tr("صورة","Photo")} ${k+1}"></button>`).join("");
   $("gallery").showModal(); showPhoto(0);
 });
 $("gThumbs").addEventListener("click",e=>{const b=e.target.closest("[data-k]");if(b)showPhoto(+b.dataset.k)});
@@ -518,13 +536,70 @@ $("gallery").addEventListener("keydown",e=>{if(e.key==="ArrowLeft")showPhoto(gal
 $("phoneTxt").textContent=PHONE_DISPLAY;
 $("waFooter").href=`https://wa.me/${WHATSAPP}`;
 $("copyBtn").onclick=()=>{
-  const done=()=>{$("copyBtn").textContent="تم النسخ";setTimeout(()=>$("copyBtn").textContent="نسخ الرقم",1500)};
+  const done=()=>{$("copyBtn").textContent=tr("تم النسخ","Copied");setTimeout(()=>$("copyBtn").textContent=tr("نسخ الرقم","Copy number"),1500)};
   try{navigator.clipboard.writeText(PHONE_DISPLAY).then(done,()=>selectPhone())}catch(e){selectPhone()}
 };
 function selectPhone(){const r=document.createRange();r.selectNodeContents($("phoneTxt"));const s=getSelection();s.removeAllRanges();s.addRange(r)}
 
+// ---------- English / Arabic ----------
+const EN_TEXT={"شاليهات الشرف":"Al Sharaf Chalets","الشاليهات":"Chalets","الأسعار":"Prices","الحجز":"Booking","الموقع":"Location","تواصل معنا":"Contact us","احجز":"Book",
+"شاليهات عائلية خاصة · الجبل الشرقي، ولاية الحمراء":"Private family chalets · Al Jabal Al Sharqi, Al Hamra",
+"استراحتك في قلب الجبل":"Your retreat in the heart of the mountains","خمسة شاليهات خاصة في الجبل الشرقي":"Five private chalets in Al Jabal Al Sharqi",
+"كل شاليه مستقل بجلسته ومطبخه. اختر الشاليه المناسب لعددكم، شوف الأيام المتاحة في التقويم، وأرسل طلب الحجز على واتساب.":"Each chalet is private, with its own seating area and kitchen. Choose the chalet that fits your group, check the free days on the calendar, and send your booking request on WhatsApp.",
+"اختر يومك":"Pick your day","تعرّف على الشاليهات":"See the chalets","شاليهات جاهزة، و2 قريباً":"chalets ready, 2 more soon","الدخول صباحاً":"morning check-in",
+"اختر يومك، ثم الشاليه":"Pick your day, then your chalet",
+"اختر اليوم من التقويم، وتظهر لك الشاليهات المتاحة فيه فقط. يصلنا طلبك على واتساب، ونرد عليك لتأكيد الحجز.":"Choose a day on the calendar to see only the chalets free that day. Your request reaches us on WhatsApp, and we reply to confirm your booking.",
+"متاح":"Available","كل الشاليهات محجوزة":"All chalets booked","عدد الشاليهات المتاحة":"chalets free","اختيارك":"Your pick",
+"أوقات الذروة:":"Peak times:","يوم الجمعة والأعياد والإجازات الرسمية وإجازات المدارس تنحجز بسرعة، فاحجز مبكراً.":"Fridays, Eid, public holidays and school holidays book up fast, so book early.",
+"شارك التقويم":"Share calendar","بيانات الحجز":"Booking details","إقامة مع مبيت":"Overnight stay","الدخول 11:00 ص · الخروج 8:00 ص اليوم التالي":"Check-in 11:00 AM · Check-out 8:00 AM next day",
+"الاسم":"Name","رقم الهاتف":"Phone number","المبلغ":"Total","أرسل الطلب على واتساب":"Send request on WhatsApp",
+"يفتح واتساب ورسالة الحجز مكتوبة. اضغط إرسال هناك ليصلنا طلبك. الحجز يتأكد بعد ردّنا عليك.":"WhatsApp opens with your booking message ready. Tap send there so we get your request. Your booking is confirmed once we reply.",
+"اختر شاليهك":"Choose your chalet","خمسة شاليهات بمساحات مختلفة، كلها بخصوصية تامة.":"Five chalets of different sizes, all fully private.",
+"الأسعار والتواقيت":"Prices & times","أسعار كل شاليه":"Prices per chalet","الأسعار بالريال العُماني لليلة الواحدة، وتشمل المبيت.":"Prices are in Omani rials per night, overnight stay included.",
+"الشاليه":"Chalet","السعة":"Capacity","السبت–الخميس":"Sat–Thu","الجمعة والإجازات":"Fri & holidays",
+"الدخول:":"Check-in:","11:00 صباحاً":"11:00 AM","الخروج:":"Check-out:","8:00 صباحاً اليوم التالي":"8:00 AM next day",
+"الجبل الشرقي، ولاية الحمراء، سلطنة عُمان":"Al Jabal Al Sharqi, Al Hamra, Sultanate of Oman","افتح في خرائط Google":"Open in Google Maps",
+"خدمات قريبة":"Nearby services","صيدلية":"Pharmacy","مطعم":"Restaurant","محل تجاري":"Shop","كوفي":"Café","محطة بترول":"Petrol station","مركز صحي":"Health center",
+"معالم قريبة":"Nearby sights","جبل شمس":"Jebel Shams","وادي غول":"Wadi Ghul","الحارة القديمة بالحمراء":"Al Hamra old village","مسفاة العبريين":"Misfat Al Abriyeen","بيت الصفاة":"Bait Al Safah","كهف الهوتة":"Al Hoota Cave",
+"استراحات ونُزل في الجبل الشرقي":"Rest houses & lodges in Al Jabal Al Sharqi","فندق شرفة العلمين":"Shorfet Al Alamin Hotel","جبل هاط":"Jebel Hat","منتجع جبل هاط":"Jebel Hat Resort",
+"استراحة الجبل الشرقي":"Al Jabal Al Sharqi Rest House","الجبل الشرقي":"Al Jabal Al Sharqi","استراحة أرض القمر":"Ard Al Qamar Rest House","الموقع ↗":"Map ↗",
+"فنادق في ولاية الحمراء":"Hotels in Al Hamra","الحمراء ماونتن فيو":"Al Hamra Mountain View","قرب الحارة القديمة":"Near the old village","فندق بيت الحمراء القديم":"Al Hamra Old House Hotel",
+"قرب بيت الصفاة":"Near Bait Al Safah","منتجع ذا فيو":"The View Resort","منتجع جبل شمس":"Jebel Shams Resort","طريق جبل شمس":"Jebel Shams road",
+"الأماكن للاسترشاد فقط، وليست تابعة لشاليهات الشرف.":"These places are listed for guidance only and are not part of Al Sharaf Chalets.",
+"نسخ الرقم":"Copy number","واتساب":"WhatsApp","مشاركة":"Share","حفظ الصورة":"Save image",
+"الشهر السابق":"Previous month","الشهر التالي":"Next month","الشاليهات المتاحة":"Available chalets","نوع الحجز":"Booking type","اسمك الكامل":"Your full name",
+"صورة التقويم":"Calendar image","إغلاق":"Close","صورة تقويم الأيام المتاحة":"Image of the available days","معرض الصور":"Photo gallery","الصورة السابقة":"Previous photo","الصورة التالية":"Next photo"};
+const ORIG=new WeakMap(), SKIP=new Set(["chaletCards","priceRows","grid","availList","availTitle","selDate","sumChalet","sumType","total","hint","calStatus","phoneTxt","gTitle","gCount","gThumbs","copyBtn","monthLabel"]);
+function applyStatic(){
+  const walk=document.createTreeWalker($("app"),NodeFilter.SHOW_TEXT,{acceptNode:n=>{for(let e=n.parentElement;e&&e.id!=="app";e=e.parentElement){if(SKIP.has(e.id)||e.tagName==="SCRIPT"||e.tagName==="STYLE")return NodeFilter.FILTER_REJECT}return NodeFilter.FILTER_ACCEPT}});
+  for(let n=walk.nextNode();n;n=walk.nextNode()){
+    if(!ORIG.has(n))ORIG.set(n,n.nodeValue);
+    const o=ORIG.get(n),k=o.trim();
+    n.nodeValue=LANG==="en"&&EN_TEXT[k]?o.replace(k,EN_TEXT[k]):o;
+  }
+  $("app").querySelectorAll("[aria-label],[placeholder],[alt]").forEach(el=>{["aria-label","placeholder","alt"].forEach(a=>{
+    if(!el.hasAttribute(a))return;const d="ar"+a.replace(/-/g,"");if(el.dataset[d]==null)el.dataset[d]=el.getAttribute(a);
+    const o=el.dataset[d];el.setAttribute(a,LANG==="en"&&EN_TEXT[o]?EN_TEXT[o]:o)})});
+}
+function setLang(l){
+  LANG=l==="en"?"en":"ar";try{localStorage.setItem("lang",LANG)}catch(e){}
+  ({months:MONTHS,days:DAYS,dow:DOW_SHORT}=LANG==="en"?ENL:AR);
+  const dir=LANG==="en"?"ltr":"rtl";
+  document.documentElement.lang=LANG;document.documentElement.dir=dir;$("app").dir=dir;$("app").lang=LANG;$("gWrap").dir=dir;
+  document.title=tr("شاليهات الشرف","Al Sharaf Chalets");
+  applyStatic();
+  $("prev").textContent=LANG==="en"?"‹":"›";$("next").textContent=LANG==="en"?"›":"‹";
+  $("gPrev").textContent=LANG==="en"?"‹":"›";$("gNext").textContent=LANG==="en"?"›":"‹";
+  $("phone").style.textAlign=LANG==="en"?"left":"right";
+  $("copyBtn").textContent=tr("نسخ الرقم","Copy number");
+  const b=$("langBtn");b.textContent=LANG==="en"?"عربي":"EN";b.lang=LANG==="en"?"ar":"en";b.setAttribute("aria-label",LANG==="en"?"العربية":"English");
+  renderStatic();
+}
+$("langBtn").onclick=()=>{setLang(LANG==="en"?"ar":"en");render()};
+
 // start on next month when the current one is nearly over
 if(new Date(state.y,state.m+1,0).getDate()-today.getDate()<5){if(++state.m>11){state.m=0;state.y++}}
+setLang(LANG);
 render();
 
 // availability: read the booked nights when the page opens
@@ -543,7 +618,7 @@ render();
   }catch(e){
     // still let guests pick a day, and say availability is confirmed on WhatsApp
     LOADED=true;render();
-    $("calStatus").textContent="ما قدرنا نحمّل الأيام المحجوزة الآن. أرسل طلبك وبنأكد لك التوفر على واتساب.";
+    $("calStatus").textContent=tr("ما قدرنا نحمّل الأيام المحجوزة الآن. أرسل طلبك وبنأكد لك التوفر على واتساب.","We couldn't load the booked days right now. Send your request and we'll confirm availability on WhatsApp.");
   }
 })();
 
@@ -551,7 +626,7 @@ render();
 async function drawStory(){
   await Promise.all(['700 80px "El Messiri"','500 30px "Tajawal"','700 30px "Tajawal"'].map(f=>document.fonts.load(f).catch(()=>{})));
   const W=1080,H=1920,c=document.createElement("canvas");c.width=W;c.height=H;
-  const x=c.getContext("2d");x.direction="rtl";x.textBaseline="middle";
+  const x=c.getContext("2d");const EN=LANG==="en";x.direction=EN?"ltr":"rtl";x.textBaseline="middle";
   const NAVY="#14213a",GOLD="#c99a3e",SAND="#f3ecdc",CARD="#fffdf8",INK="#1b2333",MUTED="#6b7285",OK="#2f7d55",OKBG="#e3f1e8",BUSY="#ecebe7";
   const D='"El Messiri","Tajawal",sans-serif',B='"Tajawal",sans-serif';
   const T=(t,px,py,font,col,al="center")=>{x.font=font;x.fillStyle=col;x.textAlign=al;x.fillText(t,px,py)};
@@ -563,55 +638,57 @@ async function drawStory(){
     x.drawImage(img,(W-img.width*s)/2,(H-img.height*s)/2,img.width*s,img.height*s);x.globalAlpha=1}catch(e){}
   const g=x.createLinearGradient(0,0,0,H);g.addColorStop(0,"rgba(20,33,58,.55)");g.addColorStop(1,"rgba(20,33,58,.92)");x.fillStyle=g;x.fillRect(0,0,W,H);
   // header (kept below Instagram's top bar)
-  x.font=`700 80px ${D}`;const tw=x.measureText("شاليهات الشرف").width;
-  x.save();x.translate(W/2+tw/2+10,296);x.strokeStyle=GOLD;x.lineWidth=5;x.scale(2.4,2.4);x.translate(-16,-16);
+  const brand=tr("شاليهات الشرف","Al Sharaf Chalets");x.font=`700 ${EN?68:80}px ${D}`;const tw=x.measureText(brand).width;
+  x.save();x.translate(EN?W/2-tw/2-30:W/2+tw/2+10,296);x.strokeStyle=GOLD;x.lineWidth=5;x.scale(2.4,2.4);x.translate(-16,-16);
   x.beginPath();x.moveTo(5,29);x.lineTo(5,15);x.arc(16,15,11,Math.PI,0);x.lineTo(27,29);x.moveTo(11,29);x.lineTo(11,17);x.arc(16,17,5,Math.PI,0);x.lineTo(21,29);x.moveTo(3,29);x.lineTo(29,29);x.stroke();x.restore();
-  T("شاليهات الشرف",W/2-40,300,`700 80px ${D}`,SAND);
-  T("الأيام المتاحة للحجز",W/2,395,`500 36px ${B}`,GOLD);
+  T(brand,EN?W/2+40:W/2-40,300,`700 ${EN?68:80}px ${D}`,SAND);
+  T(tr("الأيام المتاحة للحجز","Available days to book"),W/2,395,`500 36px ${B}`,GOLD);
   // calendar card
   const first=new Date(state.y,state.m,1),days=new Date(state.y,state.m+1,0).getDate(),off=(first.getDay()+1)%7;
   const rows=Math.ceil((off+days)/7),cellH=120,top0=660;
   const cx=60,cy=460,cw=W-120,chH=(top0-cy)+rows*(cellH+10)+110;rr(cx,cy,cw,chH,40,CARD);
   T(`${MONTHS[state.m]} ${state.y}`,W/2,535,`700 58px ${D}`,INK);
-  const colW=(cw-60)/7,right=cx+cw-30;
-  DOW_SHORT.forEach((d,i)=>T(d,right-colW*i-colW/2,615,`500 28px ${B}`,MUTED));
+  const colW=(cw-60)/7,right=cx+cw-30,left=cx+30,colX=i=>EN?left+colW*i:right-colW*(i+1);
+  DOW_SHORT.forEach((d,i)=>T(d,colX(i)+colW/2,615,`500 28px ${B}`,MUTED));
   for(let i=1;i<=days;i++){
     const idx=off+i-1,col=idx%7,row=Math.floor(idx/7);
-    const px=right-colW*(col+1)+6,py=top0+row*(cellH+10),w=colW-12;
+    const px=colX(col)+6,py=top0+row*(cellH+10),w=colW-12;
     const d=new Date(state.y,state.m,i),k=key(d),free=freeOn(k).length,past=d<today,full=free===0;
     if(past){T(String(i),px+w/2,py+cellH/2,`500 38px ${B}`,"#b7bcc6");continue}
     rr(px,py,w,cellH,22,full?BUSY:OKBG);
     T(String(i),px+w/2,py+46,`700 42px ${B}`,full?"#9aa0aa":INK);
     if(full){x.strokeStyle="#9aa0aa";x.lineWidth=3;x.beginPath();x.moveTo(px+w/2-26,py+46);x.lineTo(px+w/2+26,py+46);x.stroke();
-      T("محجوز",px+w/2,py+90,`500 24px ${B}`,"#9aa0aa")}
+      T(tr("محجوز","Booked"),px+w/2,py+90,`500 24px ${B}`,"#9aa0aa")}
     else T(`${free}/${OPEN.length}`,px+w/2,py+90,`700 26px ${B}`,OK);
   }
   // legend
   const ly=cy+chH-55,fy=Math.max(cy+chH+110,1560);
-  rr(W/2+170,ly-16,32,32,8,OKBG);T("متاح · الرقم عدد الشاليهات المتاحة",W/2+150,ly,`500 26px ${B}`,MUTED,"right");
-  rr(W/2-300,ly-16,32,32,8,BUSY);T("محجوز",W/2-320,ly,`500 26px ${B}`,MUTED,"right");
+  if(EN){rr(cx+60,ly-16,32,32,8,OKBG);T("Available · number = chalets free",cx+104,ly,`500 26px ${B}`,MUTED,"left");
+    rr(cx+cw-230,ly-16,32,32,8,BUSY);T("Booked",cx+cw-186,ly,`500 26px ${B}`,MUTED,"left");}
+  else{rr(W/2+170,ly-16,32,32,8,OKBG);T("متاح · الرقم عدد الشاليهات المتاحة",W/2+150,ly,`500 26px ${B}`,MUTED,"right");
+  rr(W/2-300,ly-16,32,32,8,BUSY);T("محجوز",W/2-320,ly,`500 26px ${B}`,MUTED,"right");}
   // footer (kept above Instagram's bottom bar)
-  T("احجز يومك الآن",W/2,fy,`700 50px ${D}`,SAND);
+  T(tr("احجز يومك الآن","Book your day now"),W/2,fy,`700 50px ${D}`,SAND);
   x.direction="ltr";T("alsharaf.om",W/2,fy+70,`700 44px ${B}`,GOLD);
   T("+968 7157 2244",W/2,fy+125,`500 32px ${B}`,SAND);
   return c;
 }
 const sc={blob:null,name:"",url:""};
 $("shareCal").onclick=async()=>{
-  const btn=$("shareCal"),old=btn.innerHTML;btn.disabled=true;btn.textContent="جارٍ تجهيز الصورة…";
+  const btn=$("shareCal"),old=btn.innerHTML;btn.disabled=true;btn.textContent=tr("جارٍ تجهيز الصورة…","Preparing image…");
   try{
     const c=await drawStory();
     sc.blob=await new Promise(r=>c.toBlob(r,"image/png"));
-    sc.name=`تقويم-شاليهات-الشرف-${MONTHS[state.m]}-${state.y}.png`;
+    sc.name=tr(`تقويم-شاليهات-الشرف-${MONTHS[state.m]}-${state.y}.png`,`al-sharaf-calendar-${MONTHS[state.m]}-${state.y}.png`);
     if(sc.url)URL.revokeObjectURL(sc.url);sc.url=URL.createObjectURL(sc.blob);
     $("scImg").src=sc.url;$("shareDlg").showModal();
-  }catch(e){alert("ما قدرنا نجهز الصورة، حاول مرة ثانية.")}
+  }catch(e){alert(tr("ما قدرنا نجهز الصورة، حاول مرة ثانية.","We couldn't prepare the image. Please try again."))}
   finally{btn.disabled=false;btn.innerHTML=old}
 };
 $("scShare").onclick=async()=>{
   const file=new File([sc.blob],sc.name,{type:"image/png"});
   if(navigator.canShare&&navigator.canShare({files:[file]})){
-    try{await navigator.share({files:[file],title:"شاليهات الشرف",text:"الأيام المتاحة للحجز · alsharaf.om"})}catch(e){}
+    try{await navigator.share({files:[file],title:tr("شاليهات الشرف","Al Sharaf Chalets"),text:tr("الأيام المتاحة للحجز · alsharaf.om","Available days to book · alsharaf.om")})}catch(e){}
   }else $("scSave").click();
 };
 $("scSave").onclick=()=>{const a=document.createElement("a");a.href=sc.url;a.download=sc.name;document.body.appendChild(a);a.click();a.remove()};
